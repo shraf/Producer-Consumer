@@ -5,6 +5,7 @@ import com.example.demo.repositories.EmployeeRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -15,6 +16,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 @Service
 public class EmployeeService {
@@ -28,9 +31,9 @@ public class EmployeeService {
     }
 
     @Async
-    public void convertImageToBase64(Employee employee){
+    public CompletableFuture<Employee> convertImageToBase64(Employee employee){
         try {
-
+        System.out.println("current thread b is /////////"+Thread.currentThread().getName());
             System.out.println("b");
         String uniqueID = UUID.randomUUID().toString();
           Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
@@ -41,9 +44,8 @@ public class EmployeeService {
         } catch (IOException e) {
             employee.setImageurl("");
             System.out.println(e.getMessage());
-            return;
         }
-
+    return CompletableFuture.completedFuture(employee);
     }
 
 }
