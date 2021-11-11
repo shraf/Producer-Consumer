@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 @CrossOrigin(origins = "*")
-@RestController
+@RestController 
 @RequestMapping("/api/employee")
 public class EmployeeController {
     @Autowired
